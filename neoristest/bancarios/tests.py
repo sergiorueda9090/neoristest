@@ -21,3 +21,28 @@ class ListViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTrue(resp.context['cantidadTitulos'] > 0)
         self.assertTrue( len(resp.context['productos']) > 0)
+
+    #Buscar registro
+    def test_buscar_register(self):
+        resp = self.client.get('/')
+        for productitem in resp.context["productos"]:
+            #print(productitem["idTitulo"])
+            self.assertEqual(productitem["idTitulo"], "USD")
+        self.assertEqual(resp.status_code, 200)
+
+    #Actualizar Fecha
+    def test_buscar_register(self):
+        resp = self.client.get('/')
+        self.assertEqual(resp.context["productos"][0]["idTitulo"], "USD")
+        resp.context["productos"][0]["fecha_creacion"] = "2022-02-01"
+
+    #Redireccion de metodos
+    def test_redireccion_template(self):
+        resp = self.client.get('/')
+        self.assertTemplateUsed(resp, 'bancarios/base.html')
+        self.assertRedirects(resp, '/')
+
+
+
+ 
+
