@@ -23,25 +23,27 @@
         <div class="row mt-5">
             <!--FORMULARIO-->
             <div class="col-lg-5">
+                <p class="text-center mb-1" style="font-size: 20px; font-weight: 500;">Crear Registro </p>
                 <form method="post" action="{% url 'create' %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="exampleFormControlSelect2">ID Titulo</label>
+                        <label for="exampleFormControlSelect2">ID Título</label>
                         <select class="form-control" required id="exampleFormControlSelect2" name="id_titulo">
                           <option value="USD">USD</option>
                           <option value="TRPV">TRPV</option>
                           <option value="TP">TP</option>
                           <option value="TID">TID</option>
+                          <option value="THI">THI</option>
                           <option value="TESU">TESU</option>
                           <option value="TEST">TEST</option>
-                          <option value="TEST">TEST</option>
+                          <option value="TESP">TESP</option>
                           <option value="TESOROS">TESOROS</option>
                           <option value="TESI">TESI</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect2">Titulo</label>
+                        <label for="exampleFormControlSelect2">Título</label>
                         <select class="form-control" required id="exampleFormControlSelect2" name="titulo">
                           <option value="DOLAR">DOLAR</option>
                           <option value="TÍTULO DE PARTICIPACIÓN RENTA VARIABLE,TITULO DE 
@@ -50,7 +52,7 @@
                           <option value="TIDIS">TIDIS</option>
                           <option value="TITULOS HIPOTECARIOS">TITULOS HIPOTECARIOS</option>
                           <option value="TES UVR">TES UVR</option>
-                          <option value="TES UVR">TES UVR</option>
+                          <option value="TES TRM">TES TRM</option>
                           <option value="TES PESOS">TES PESOS</option>
                           <option value="BONOS DEL TESORO EEUU">BONOS DEL TESORO EEUU</option>
                           <option value="TES IPC">TES IPC</option>
@@ -58,16 +60,16 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Clasificación</label>
-                      <input type="text" required name="clasificacion" class="form-control" id="exampleInputPassword1">
+                      <input type="text" placeholder="Ingresa Clasificación" required name="clasificacion" class="form-control" id="exampleInputPassword1">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Valor</label>
-                        <input type="text" required name="valor" class="form-control" id="exampleInputPassword1">
+                        <input type="number" required placeholder="Ingresa Valor" name="valor" class="form-control" id="exampleInputPassword1">
                     </div>
     
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Fecha Creacion</label>
+                        <label for="exampleInputPassword1">Fecha Creación</label>
                         <input type="date" required name="fecha_creacion" class="form-control" id="exampleInputPassword1">
                     </div>
 
@@ -78,7 +80,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Pago Cuota</label>
-                        <input type="text" required name="pago_cuota" class="form-control" id="exampleInputPassword1">
+                        <input type="number" placeholder="Ingresa Pago cuota" required name="pago_cuota" class="form-control" id="exampleInputPassword1">
                     </div>
                     {% if action == "crear_user" and status == 404 %}
                     <div class="alert alert-success" role="alert">
@@ -86,7 +88,7 @@
                     </div>
                     {% elif action == "crear_user" and status == 200 %}
                     <div class="alert alert-danger" role="alert">
-                        Ya existe ID titulo
+                        Ya existe ID título
                     </div>
                     {% else %}
                     {% endif %}
@@ -94,14 +96,14 @@
                   </form>
             </div>
             <!--FIN FORMULARIO-->
-
-            <div class="col-lg-7">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6 mt-4">
                  <!--PAGAR CUOTA-->
                 <form method="post" action="{% url 'cuotaPagar' %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Ingresar el ID titulo para realizar el pago de la cuota</label>
-                        <input type="text" required placeholder="Ingresa el IDtitulo para realizar el pago" name="id_titulo" class="form-control" id="exampleInputPassword1">
+                        <label for="exampleInputPassword1" class="alert-link">Ingresar el ID título para realizar el pago de la cuota</label>
+                        <input type="text" required placeholder="Ingresa el IDtítulo para realizar el pago" name="id_titulo" class="form-control" id="exampleInputPassword1">
                         {% if action == "pago_cuota" and status == 200 %}
                         <div class="alert alert-success alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -109,20 +111,21 @@
                         </div>
                         {% elif action == "pago_cuota" and status == 404  %}
                         <div class="alert alert-danger" role="alert">
-                            No existe ID titulo
+                            No existe <span  class="alert-link">ID título</span>
                         </div>
                         {% else %}
                         {% endif %}
                         <button type="submit" class="btn btn-primary btn-block">Pago de la cuota</button>
                     </div>
                 </form>
+                <hr />
                 <!--FIN PAGAR CUOTA-->
 
                 <!--ELIMINAR REGISTRO-->
                 <form method="post" action="{% url 'cuotaEliminar' %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Ingresar el ID titulo para realizar la eliminacion del registro</label>
+                        <label for="exampleInputPassword1" class="alert-link">Ingresar el ID título para eliminar el registro</label>
                         <input type="text" required name="id_titulo" placeholder="Eliminar Registro por IDtitulo" class="form-control" id="exampleInputPassword1">
                         {% if action == "Eliminar" and status == 200 %}
                         <div class="alert alert-success" role="alert">
@@ -130,13 +133,14 @@
                         </div>
                         {% elif action == "Eliminar" and status == 404  %}
                         <div class="alert alert-danger" role="alert">
-                            Error al Eliminar el registro.
+                            No hay ningun registro con el <span class="alert-link">ID título</span> ingresado.
                         </div>
                         {% else %}
                         {% endif %}
                         <button type="submit" class="btn btn-danger btn-block">ELIMINAR</button>
                     </div>
                 </form>
+                <hr/>
                 <!--FIN ELIMINAR REGISTRO-->
 
 
@@ -145,27 +149,30 @@
                     {% csrf_token %}
                     <div class="form-row mt-4">
                         <div class="col">
-                            <label for="exampleInputPassword1">Fecha creacíon</label>
+                            <label for="exampleInputPassword1" class="alert-link">Fecha creacíon</label>
                             <input type="date" required name="fecha_creacion" class="form-control" placeholder="First name">
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Fecha nueva</label>
+                            <label for="exampleInputPassword1" class="alert-link">Fecha nueva</label>
                             <input type="date" required name="nueva_fecha" class="form-control" placeholder="Last name">
                         </div>
-                        <small id="emailHelp" class="form-text text-muted mb-2">Toda fecha que coincida con la fecha de creación va hacer actualizada por la fecha nueva</small>
+                        <small id="emailHelp" class="form-text text-muted mb-2 alert-link">
+                            Toda fecha que coincida con la fecha de creación va hacer actualizada por la fecha nueva.
+                        </small>
                         {% if action == "fechas_actualizar" and status == 200 %}
                         <div class="alert alert-success" role="alert">
                             Fechas Actualizadas.
                         </div>
                         {% elif action == "fechas_actualizar" and status == 404  %}
                         <div class="alert alert-danger mt-3" role="alert">
-                            No existe la fecha de creacion en nuestro registro.
+                            No existe la fecha de creación en nuestro registro.
                         </div>
                         {% else %}
                         {% endif %}
                         <button type="submit" class="btn btn-info btn-block">Modificar Fechas</button>
                     </div>
                 </form>
+                <hr/>
                 <!--FIN MODIFICAR FECHAS-->
             </div>
             
@@ -177,11 +184,11 @@
                 <table id="myTable" class="table table-striped ">
                     <thead>
                         <tr>
-                        <th scope="col">ID Titulo</th>
-                        <th scope="col">Titulo</th>
+                        <th scope="col">ID Título</th>
+                        <th scope="col">Título</th>
                         <th scope="col">Clasificación</th>
                         <th scope="col">Valor</th>
-                        <th scope="col">Fecha Creacion</th>
+                        <th scope="col">Fecha Creación</th>
                         <th scope="col">Fecha Vencimiento</th>
                         <th scope="col">Pago Cuota</th>
                         </tr>

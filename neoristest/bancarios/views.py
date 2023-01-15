@@ -13,7 +13,7 @@ def home(request, element=None):
 def listar(action=None, status=None, idTitulo=None):
     if idTitulo != None:
         cadena_json          = json.load(open('bancarios/BD.json',encoding="utf8"))
-        output_dict          = [x for x in cadena_json if x['idTitulo'] == idTitulo]
+        output_dict          = [x for x in cadena_json if x['idTitulo'] == idTitulo.upper()]
         if len(output_dict) > 0:
             return 200
         else:
@@ -56,23 +56,21 @@ def create(request):
         contexto, template_name = listar("crear_user")
         return render(request, template_name, contexto)
 
-
 #Funcion para realizar el pago de la cuota (y/n)
 def cuotaPagar(request):
     if request.method == 'POST':
-        response_data = buscarRegistro(request.POST["id_titulo"])
+        response_data = buscarRegistro(request.POST["id_titulo"].upper())
         contexto, template_name = listar("pago_cuota", response_data)
         return render(request, template_name, contexto)
     else:
         contexto, template_name = listar("pago_cuota")
         return render(request, template_name, contexto)
 
-
 #Buscar registro por iTitulo 
 def buscarRegistro(id_titulo=None):
     cadena_json          = json.load(open('bancarios/BD.json',encoding="utf8"))
-    output_dict_diferent = [x for x in cadena_json if x['idTitulo'] != id_titulo]
-    output_dict          = [x for x in cadena_json if x['idTitulo'] == id_titulo]
+    output_dict_diferent = [x for x in cadena_json if x['idTitulo'] != id_titulo.upper()]
+    output_dict          = [x for x in cadena_json if x['idTitulo'] == id_titulo.upper()]
     if len(output_dict) > 0:
         output_dict[0]["pagocuota"] = "y"
         output_dict_diferent.append(output_dict[0])
@@ -88,9 +86,9 @@ def cuotaEliminar(request):
     if request.method == 'POST':
         id_titulo            = request.POST["id_titulo"]
         cadena_json_eliminar = json.load(open('bancarios/BD.json',encoding="utf8"))
-        output_dict          = [x for x in cadena_json_eliminar if x['idTitulo'] == id_titulo]
+        output_dict          = [x for x in cadena_json_eliminar if x['idTitulo'] == id_titulo.upper()]
         if len(output_dict) > 0:
-            output_dict_diferent = [x for x in cadena_json_eliminar if x['idTitulo'] != id_titulo]
+            output_dict_diferent = [x for x in cadena_json_eliminar if x['idTitulo'] != id_titulo.upper()]
             f = open("bancarios/BD.json", "w")
             f.write(json.dumps(output_dict_diferent))
             f.close()
